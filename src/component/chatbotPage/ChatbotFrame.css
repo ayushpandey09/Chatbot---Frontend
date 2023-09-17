@@ -31,7 +31,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100vh; /* Set the height to cover the whole page */
-    background: url('C:\Users\e013221\Frontend workspace\react\Practice\propsDemo\public\18.jpg');
+    background: url('../../../public/18.jpg');
 }
 
 .chat-header {

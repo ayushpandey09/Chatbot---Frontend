@@ -41,7 +41,7 @@ body, h1, h2, p {
   
   /* Hero Section styles */
   .hero {
-    background: url('C:\Users\e013221\Frontend workspace\react\Practice\propsDemo\public\18.jpg') no-repeat center center;
+    background: url('../../../public/18.jpg') no-repeat center center;
     background-size: cover;
     text-align: center;
     padding: 100px 0;
