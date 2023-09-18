@@ -33,7 +33,7 @@ export default function Navbar() {
             About
           </a>
           <ul className="dropdown-menu">
-            <li><a className="dropdown-item" href="/">General Information</a></li>
+            <li><a className="dropdown-item" href="/generalInfo">General Information</a></li>
             <li><a className="dropdown-item" href="/">Company Policies</a></li>
           </ul>
         </li>

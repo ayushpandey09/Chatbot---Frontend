@@ -6,6 +6,7 @@ import ChatbotPage from './component/chatbotPage/chatbotPage';
 import Form from './component/formPage/Form';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Chatbox from './component/chatbox/Chatbox'
+import GeneralInfo from './component/generalPolices/GeneralInfo';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
       <Route path = "/" exact element={<WelcomePage/> }/>
       <Route path = "/chatbot" element={<Chatbox/>}/>
       <Route path = "/form" element={<Form/>}/>
+      <Route path = "/generalInfo" element = {<GeneralInfo/>}/>
     </Routes>
     
     </div>

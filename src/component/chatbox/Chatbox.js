@@ -37,7 +37,6 @@ function ChatBox() {
                     // botResponse = content;
                     const botMessage = { text: content, isBot: true };
                     setMessages((prevMessages) => [...prevMessages, botMessage]);
-                    
                 }
                )
                .catch(
@@ -45,6 +44,7 @@ function ChatBox() {
                     console.log(error)
                 }
                )
+               //on the basis of last question next api will call
             }else if(lastQuestion === "Enter your location"){
                 axios.get(`http://localhost:8080/chatbot/questionithelp/${param}`).then(
                     (response)=>{
@@ -75,8 +75,6 @@ function ChatBox() {
             (response)=>{
                 console.log(response.data);
                 //Get request for getting the response back
-                
-
                     axios.get('http://localhost:8080/chatbot/questionresponse').then(
                     (response)=>{
                         console.log(response.data);
