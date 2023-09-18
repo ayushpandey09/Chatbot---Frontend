@@ -1,7 +1,7 @@
 /* ChatBox.css */
 .chat-box {
-    max-width: 400px;
-    margin: 0 auto;
+    max-width: 500px;
+    margin: 40px auto;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
@@ -10,7 +10,7 @@
   
   .chat-messages {
     padding: 10px;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
     height: 80vh;
   }
