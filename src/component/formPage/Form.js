@@ -47,6 +47,8 @@ function ChatStartPage() {
 
   const [phoneError, setPhoneError] = useState('');
 
+  const navigate = useNavigate();
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -78,10 +80,15 @@ function ChatStartPage() {
     // For demonstration, we'll just display the details in the console.
     console.log({id : 104, empEmail, empName, phone});
     axios.post('http://localhost:8080/adduser',{
-        id: 1012, empName, empEmail, phone
+        id: "", empName, empEmail, phone
     }).then((res)=>{
         console.log(res.data);
     })
+
+    localStorage.setItem('user_email',empEmail);
+
+    const path = `/chatbot`; 
+    navigate(path);
     console.log('Submitted Data:', formData);
   };
 

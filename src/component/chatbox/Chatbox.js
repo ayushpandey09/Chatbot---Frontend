@@ -61,6 +61,26 @@ function ChatBox() {
                         console.log(error)
                     }
                    )
+            }else if(lastQuestion === "Confirm if you want to exit"){
+              if(userMessage.text.includes("yes")) { 
+              const email = localStorage.getItem('user_email');
+              console.log("user email obtained: "+email);
+              axios.get(`http://localhost:8080/chatbot/chattranscript/${email}`).then(
+                    (response)=>{
+                        console.log(response.data);
+                        // const {content,senderName} = response.data;
+                       // botResponse = content;
+                        const botMessage = { text: response.data, isBot: true };
+                        setMessages((prevMessages) => [...prevMessages, botMessage]);
+                                              
+                    }
+                   )
+                   .catch(
+                    (error)=>{
+                        console.log(error)
+                    }
+                   )
+              }
             }
         }
         
