@@ -7,6 +7,9 @@ import Form from './component/formPage/Form';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import Chatbox from './component/chatbox/Chatbox'
 import GeneralInfo from './component/generalPolices/GeneralInfo';
+import VoiceToText from './component/voice/VoiceToText';
+import UserProgressStatus from './component/progress/UserProgressStatus';
+import SurveyPage from './component/survey/SurveyPage';
 
 function App() {
   return (
@@ -18,6 +21,8 @@ function App() {
       <Route path = "/chatbot" element={<Chatbox/>}/>
       <Route path = "/form" element={<Form/>}/>
       <Route path = "/generalInfo" element = {<GeneralInfo/>}/>
+      <Route  path = "/progress" element={<UserProgressStatus/>}/>
+      <Route path='/survey' element={<SurveyPage/>}/>
     </Routes>
     
     </div>
