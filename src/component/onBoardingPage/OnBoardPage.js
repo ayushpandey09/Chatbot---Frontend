@@ -16,15 +16,18 @@ function OnBoardPage({ checkedItems , progress}) {
 
   return (
     <div>
-      <div style={{ width: "700px" }}>
+      <div className ="onboardContainer my-5" style={{ width: "700px" }}>
         <h2>
           {" "}
-          Onboarding Progress :
+          Overall Onboarding Progress :
         </h2>
-        <div className="mainDiv">
+        {progress===100?<h2 style={{color:'green'}}>Completed</h2> : <h2 style={{color:'red'}}>Pending</h2> }
+        <div className="mainDiv d-flex">
           <div className="childDiv" style={{ width: `${progress}%` }}>
-            <span> </span>
+            <span></span>
+            <p className='percent-text'>{parseInt(progress)}% </p>
           </div>
+          
         </div>
       </div>
 
@@ -40,7 +43,12 @@ function OnBoardPage({ checkedItems , progress}) {
                   readOnly
                   onClick={() => {
                     //handleItemCheck(item.id);
-                    navigate(`/onboard/form/${item.id}`)
+                    if(item.id === 2){
+                      navigate('/onboard/bootcampform');
+                    }else{
+                      navigate(`/onboard/form/${item.id}`)
+                    }
+                    
                   }}
                 />
                 {item.name}

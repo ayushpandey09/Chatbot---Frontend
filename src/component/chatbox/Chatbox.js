@@ -4,6 +4,7 @@ import axios from 'axios';
 import MicIcon from '@mui/icons-material/Mic';
 import MicOffIcon from '@mui/icons-material/MicOff';
 import Instruction from './Instruction';
+import Voice from './Voice'
 
 function ChatBox() {
 
@@ -75,8 +76,9 @@ function ChatBox() {
     }
     //set userMessage and add newMessage to message array
     const userMessage = {
-      text: lastQuestion === "Enter your id number" ? "Employee ID: "
-        + newMessage : lastQuestion === "Enter your location" ? "Location: " + newMessage : newMessage, isBot: false
+      text: lastQuestion === "Enter your employee id" ? "Employee ID: "
+        + newMessage :lastQuestion === "Enter your employee ID" ? "Employee ID: "
+        + newMessage: lastQuestion === "Enter your location" ? "Location: " + newMessage : newMessage, isBot: false
     };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setNewMessage('');
@@ -104,13 +106,14 @@ function ChatBox() {
         param = param.replace(/\?/g, '');
       }
       //continuation for manager prompt
-      if (lastQuestion === "Enter your id number") {
+      if (lastQuestion === "Enter your employee id") {
 
         axios.get(`http://localhost:8080/chatbot/questionmanager/${param}`).then(
           (response) => {
             console.log(response.data);
             const { content, senderName } = response.data;
             // botResponse = content;
+            console.log(content + "check");
             const botMessage = { text: content, isBot: true };
             setMessages((prevMessages) => [...prevMessages, botMessage]);
           }
@@ -138,7 +141,25 @@ function ChatBox() {
               console.log(error)
             }
           )
-      } else if (lastQuestion === "Confirm if you want to exit") {
+      }else if (lastQuestion === "Enter your employee ID") {
+
+        axios.get(`http://localhost:8080/chatbot/questionnwa/${param}`).then(
+          (response) => {
+            console.log(response.data);
+            const { content, senderName } = response.data;
+            // botResponse = content;
+            const botMessage = { text: content, isBot: true };
+            setMessages((prevMessages) => [...prevMessages, botMessage]);
+
+          }
+        )
+          .catch(
+            (error) => {
+              console.log(error)
+            }
+          )
+      }
+       else if (lastQuestion === "Confirm if you want to exit") {
         if (userMessage.text.toLowerCase().includes("yes")) {
           const email = localStorage.getItem('user_email');
           console.log("user email obtained: " + email);
@@ -232,6 +253,7 @@ function ChatBox() {
           {isRecording ? <MicOffIcon /> : <MicIcon />}
         </button>
         <button onClick={handleSendMessage} onKeyPress={handleKey}>Send</button>
+        <Voice text={messages}/>
       </div>
     </div>
   );

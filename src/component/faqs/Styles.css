@@ -1,0 +1,54 @@
+.faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+}
+
+/* Custom class for the FAQ heading */
+.faq-heading {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+/* Custom class for the FAQ section */
+.faq-section {
+  margin-bottom: 30px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Custom class for the section heading */
+.section-heading {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: #007bff;
+}
+
+/* Custom class for the FAQ list */
+.faq-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+/* Custom class for FAQ list items */
+.faq-item {
+  margin-bottom: 20px;
+}
+
+/* Custom class for question headings */
+.question-heading {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Custom class for answer paragraphs */
+.answer-paragraph {
+  color: #555;
+}

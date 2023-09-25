@@ -4,6 +4,7 @@ import { Link, Routes, Route } from 'react-router-dom';
 import OnBoardPage from './OnBoardPage';
 import Form from './Form';
 import CheckboxList from '../progressbar/CheckBoxList';
+import BootcampForm from './BootcampForm';
 
 
 function OnboardLayout() {
@@ -23,6 +24,7 @@ function OnboardLayout() {
       <Routes>
         <Route path="/" element={<OnBoardPage checkedItems={checkedItems} progress = {progress}/>} />
         <Route path="/form/:id" element={<Form onFormSubmit={handleFormSubmit}/>} />
+        <Route path="bootcampform" element={<BootcampForm onFormSubmit ={handleFormSubmit}/>}/>
       </Routes>
      
     </div>

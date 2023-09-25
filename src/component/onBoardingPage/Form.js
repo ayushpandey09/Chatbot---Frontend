@@ -1,5 +1,7 @@
 // import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import SurveyResultCard from './SurveyResultCard';
+import './Styles.css'
 
 // const Form = ({ onFormSubmit }) => {
 //   const [formData, setFormData] = useState({ name: '' });
@@ -44,6 +46,7 @@ function Form({ onFormSubmit }) {
     feedback: '',
     improvements: '',
   });
+  const [submitted, setSubmitted] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams('id');
@@ -53,19 +56,28 @@ function Form({ onFormSubmit }) {
     setFormData({ ...formData, [name]: value });
   };
 
+  const resultData = [
+    { label: 'Overall Satisfaction', value: formData.satisfaction },
+    { label: 'Feedback', value: formData.feedback },
+    { label: 'Suggestions for Improvements', value: formData.improvements },
+  ];
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission, e.g., send the data to a server
     console.log(formData);
     onFormSubmit(parseInt(id));
-    // Reset the form
-    setFormData({
-      satisfaction: '',
-      feedback: '',
-      improvements: '',
-    });
-    navigate('/onboard');
+   // Reset the form
+    // setFormData({
+    //   satisfaction: '',
+    //   feedback: '',
+    //   improvements: '',
+    // });
+    setSubmitted(true);
+   // navigate('/onboard');
   };
+
+  
 
   return (
     <div className="container mt-5">
@@ -112,6 +124,13 @@ function Form({ onFormSubmit }) {
           Submit
         </button>
       </form>
+      {submitted && (
+        <div className="overlay">
+          <div className="result-card">
+            <SurveyResultCard data={resultData} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
