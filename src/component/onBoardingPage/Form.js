@@ -3,40 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import SurveyResultCard from './SurveyResultCard';
 import './Styles.css'
 
-// const Form = ({ onFormSubmit }) => {
-//   const [formData, setFormData] = useState({ name: '' });
-//   const {id} = useParams('id');
-
-//   const navigate = useNavigate();
-
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     console.log(id);
-//     onFormSubmit(parseInt(id));
-
-//     navigate('/onboard');
-//     //onFormSubmit(id);
-//   };
-
-//   return (
-//     <div>
-//       <h2>Edit Item</h2>
-//       <form onSubmit={handleSubmit}>
-//         <label>
-//           Name:
-//           <input
-//             type="text"
-//             value={formData.name}
-//             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-//           />
-//         </label>
-//         <button type="submit">Submit</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Form;
 
 import React, { useState } from 'react';
 

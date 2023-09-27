@@ -1,32 +1,29 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
 import './Styles.css' 
+import { useNavigate } from 'react-router-dom'
+//const { useNavigate } = require('react-router-dom');
+
 function WelcomePage() {
   const navigate = useNavigate();
 
   return (
     <div className="welcome-page">
-    {/* Header */}
-    {/* <header className="header">
-        <div className="logo">
-          <img src="your-logo.png" alt="Chatbot Logo" />
-        </div>
-        <nav className="navigation-menu">
-          <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/">About</a></li>
-            <li><a href="/">FAQ</a></li>
-            <li><a href="/">Contact</a></li>
-          </ul>
-        </nav>
-      </header> */}
-
-    {/* Hero Section */}
     <section className="hero">
       <div className="hero-content">
-        <h1>Welcome to Your Chatbot</h1>
+        <h1>Welcome to Chatbot</h1>
         <p>Chat with us and get instant assistance!</p>
-        <button onClick={()=>{ navigate("/form") }} className="cta-button">Get Started</button>
+        <button onClick={()=>{ 
+          const isFormFilled = localStorage.getItem('isFormFilled');
+
+          if(isFormFilled === "true"){
+            console.log('isformfiled'+ isFormFilled);
+            navigate('/chatbot');
+          }else{
+            console.log('isformfiledelse'+ isFormFilled);
+            navigate("/form");
+          }
+          
+          }} className="cta-button">Get Started</button>
       </div>
     </section>
 
@@ -34,30 +31,10 @@ function WelcomePage() {
     <section className="about">
       <div className="about-content">
         <h2>About Us</h2>
-        <p>Brief description about chatbot and its features.</p>
+        <p>Welcome to our intelligent onboarding chatbot,
+         your trusted companion in making the onboarding experience seamless and efficient for our new joiners. </p>
       </div>
     </section>
-
-    {/* How It Works Section */}
-    {/* <section className="how-it-works">
-      <div className="steps">
-        
-        <div className="step">
-          <div className="step-icon">Step 1 Icon</div>
-          <p>Step 1: Describe the first step here.</p>
-        </div>
-        
-        <div className="step">
-          <div className="step-icon">Step 2 Icon</div>
-          <p>Step 2: Describe the second step here.</p>
-        </div>
-        
-        <div className="step">
-          <div className="step-icon">Step 3 Icon</div>
-          <p>Step 3: Describe the third step here.</p>
-        </div>
-      </div>
-    </section> */}
 
     {/* Testimonials Section */}
     <section className="testimonials">

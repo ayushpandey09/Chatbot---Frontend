@@ -10,7 +10,7 @@ import BootcampForm from './BootcampForm';
 function OnboardLayout() {
     const [checkedItems, setCheckedItems] = useState([]);
     const [progress , setProgress] = useState(0);
-    const totalItems = 3;
+    const totalItems = 2;
       const handleFormSubmit = (itemId) => {
         // Add the item ID to the checkedItems array
         setCheckedItems((prevCheckedItems) => [...prevCheckedItems, itemId]);

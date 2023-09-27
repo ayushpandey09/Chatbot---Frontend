@@ -56,8 +56,14 @@
   }
 
   .onboardContainer{
-    margin: 0 auto;
+    margin: 0 15px;
+    padding-top: 15px;
   }
+.background{
+    background: url('../../Onboard.jpg') no-repeat center center;
+    height: 100vh;
+    border-radius: 10px;
+}
   /* progress-bar */
   .mainDiv { 
     height: 1.2rem;

@@ -1,37 +1,3 @@
-// import React from 'react'
-//import { useNavigate } from 'react-router-dom'
-
-// function Form() {
-//     const navigate = useNavigate();
-//   return (
-//     <div>
-//         <div class="container mt-5">
-//         <h1 class="text-center">Welcome to Our ChatBot</h1>
-//         <p class="text-center">Please provide your registration details:</p>
-//         <form id="registrationForm">
-//             <div class="form-group">
-//                 <label for="name">Name:</label>
-//                 <input type="text" id="name" name="name" required class="form-control"/>
-//             </div>
-//             <div class="form-group">
-//                 <label for="email">Email:</label>
-//                 <input type="email" id="email" name="email" required class="form-control"/>
-//             </div>
-//             <div class="form-group">
-//                 <label for="phone">Phone (Optional):</label>
-//                 <input type="tel" id="phone" name="phone" class="form-control"/>
-//             </div>
-//             <div class="form-group text-center">
-//                 <input onClick={()=>{ navigate("/chatbot") }} type="submit" value="Submit" class="btn btn-primary"/>
-//             </div>
-//         </form>
-//     </div>
-//     </div>
-//   )
-// }
-
-// export default Form
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 import './Form.css'; // Import the CSS file
@@ -44,10 +10,10 @@ function ChatStartPage() {
     phone: '',
     
   });
-
   const [phoneError, setPhoneError] = useState('');
 
   const navigate = useNavigate();
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -58,7 +24,7 @@ function ChatStartPage() {
   };
 
   const validatePhone = (phone) => {
-    // Basic regex pattern for a 10-digit phone number in the format "123-456-7890"
+    // regex pattern for a 10-digit phone number 
     const phonePattern = /^\d{10}$/;
 
     return phonePattern.test(phone);
@@ -74,18 +40,15 @@ function ChatStartPage() {
       return;
     }
 
-    // Here, you can implement the logic to start the chat with the provided details.
-    // You can send the data to your chat component or API as needed.
-
-    // For demonstration, we'll just display the details in the console.
-    console.log({id : 104, empEmail, empName, phone});
-    axios.post('http://localhost:8080/adduser',{
+    
+    axios.post('http://localhost:8080/user',{
         id: "", empName, empEmail, phone
     }).then((res)=>{
         console.log(res.data);
-    })
+    }).catch((err)=>console.log(err));
 
     localStorage.setItem('user_email',empEmail);
+    localStorage.setItem('isFormFilled',true);
 
     const path = `/chatbot`; 
     navigate(path);

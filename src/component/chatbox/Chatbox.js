@@ -222,10 +222,9 @@ function ChatBox() {
   };
 
   return (
+    <div className='chatboxBackground'>
     <div className="chat-box">
       <div className="chat-messages">
-
-
         {
           messages.length === 0 ? (<Instruction/>) :
             (
@@ -255,6 +254,7 @@ function ChatBox() {
         <button onClick={handleSendMessage} onKeyPress={handleKey}>Send</button>
         <Voice text={messages}/>
       </div>
+    </div>
     </div>
   );
 }
