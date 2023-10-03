@@ -1,4 +1,4 @@
-import React, { useState , useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import './Chatbox.css';
 import axios from 'axios';
 import MicIcon from '@mui/icons-material/Mic';
@@ -72,13 +72,13 @@ function ChatBox() {
   }
 
   // Simulate loading and then set the response text
-const simulateChatbotResponse = () => {
-  setLoading(true);
+  const simulateChatbotResponse = () => {
+    setLoading(true);
 
-  setTimeout(() => {
-    setLoading(false);
-  }, 1500); // Set the delay time in milliseconds (e.g., 2000ms = 2 seconds)
-};
+    setTimeout(() => {
+      setLoading(false);
+    }, 1500); // Set the delay time in milliseconds (e.g., 2000ms = 2 seconds)
+  };
 
 
   // Function to send a user message
@@ -94,13 +94,13 @@ const simulateChatbotResponse = () => {
     // if (newMessage.includes('.')) {
     //   setNewMessage(newMessage.slice(0, -1));
     // }
-    
+
 
     //set userMessage and add newMessage to message array
     const userMessage = {
       text: lastQuestion === "Enter your employee id" ? "Employee ID: "
-        + newMessage :lastQuestion === "Enter your employee ID" ? "Employee ID: "
-        + newMessage: lastQuestion === "Enter your location" ? "Location: " + newMessage : newMessage, isBot: false
+        + newMessage : lastQuestion === "Enter your employee ID" ? "Employee ID: "
+          + newMessage : lastQuestion === "Enter your location" ? "Location: " + newMessage : newMessage, isBot: false
     };
     setMessages((prevMessages) => [...prevMessages, userMessage]);
     setNewMessage('');
@@ -133,10 +133,12 @@ const simulateChatbotResponse = () => {
       }
       //continuation for manager prompt
       if (lastQuestion === "Enter your employee id") {
-        if(!empId){
+        if (!empId) {
           setEmpId(param);
         }
-        
+        param = parseInt(param);
+        console.log(parseInt(param));
+
         axios.get(`http://localhost:8080/chatbot/questionmanager/${param}`).then(
           (response) => {
             console.log(response.data);
@@ -149,7 +151,16 @@ const simulateChatbotResponse = () => {
         )
           .catch(
             (error) => {
-              console.log(error)
+              if (error.response && error.response.status === 400) {
+                setEmpId("");
+                const botMessage = { text: "Invalid employee ID", isBot: true };
+                setMessages((prevMessages) => [...prevMessages, botMessage]);
+                console.log(error);
+                return;
+              } else {
+                console.error('An error occurred:', error.message);
+                return;
+              }
             }
           )
         //on the basis of last question next api will call
@@ -170,9 +181,9 @@ const simulateChatbotResponse = () => {
               console.log(error)
             }
           )
-      }else if (lastQuestion === "Enter your employee ID") {
+      } else if (lastQuestion === "Enter your employee ID") {
 
-        if(!empId){
+        if (!empId) {
           setEmpId(param);
         }
         axios.get(`http://localhost:8080/chatbot/questionnwa/${param}`).then(
@@ -182,7 +193,6 @@ const simulateChatbotResponse = () => {
             // botResponse = content;
             const botMessage = { text: content, isBot: true };
             setMessages((prevMessages) => [...prevMessages, botMessage]);
-
           }
         )
           .catch(
@@ -191,7 +201,7 @@ const simulateChatbotResponse = () => {
             }
           )
       }
-       else if (lastQuestion === "Confirm if you want to exit") {
+      else if (lastQuestion === "Confirm if you want to exit") {
         if (userMessage.text.toLowerCase().includes("yes")) {
           const email = localStorage.getItem('user_email');
           console.log("user email obtained: " + email);
@@ -211,7 +221,6 @@ const simulateChatbotResponse = () => {
     }
     //post request for initiating chat
     if (!isContinued) {
-      console.log("check186");
       axios.post('http://localhost:8080/chatbot/question', messageBody, {
         headers: {
           'Content-Type': 'application/json',
@@ -220,7 +229,7 @@ const simulateChatbotResponse = () => {
       ).then(
         (response) => {
           console.log(response.data);
-          
+
           //Get request for getting the response back
           axios.get('http://localhost:8080/chatbot/questionresponse').then(
             (response) => {
@@ -231,17 +240,17 @@ const simulateChatbotResponse = () => {
               //binding the response of the bot 
               const botMessage = { text: content, isBot: true };
               //updating bot response to final message array(sequence of message)
-              if (content === "Enter your employee ID"){
-              if(!empId){
-                setMessages((prevMessages) => [...prevMessages, botMessage]);
-                //if bot recognise the prompt then it will ask for another input and to get another input 
-              //isContinue must be true
-              setIsContinued(true);
-              setLastQuestion(content);
-              return;
-              //for continuity code will continue from handleSentMessage
-              }else{
-                
+              if (content === "Enter your employee ID") {
+                if (!empId) {
+                  setMessages((prevMessages) => [...prevMessages, botMessage]);
+                  //if bot recognise the prompt then it will ask for another input and to get another input 
+                  //isContinue must be true
+                  setIsContinued(true);
+                  setLastQuestion(content);
+                  return;
+                  //for continuity code will continue from handleSentMessage
+                } else {
+
                   axios.get(`http://localhost:8080/chatbot/questionnwa/${empId}`).then(
                     (response) => {
                       console.log(response.data);
@@ -250,36 +259,55 @@ const simulateChatbotResponse = () => {
                       const botMessage = { text: content, isBot: true };
                       setMessages((prevMessages) => [...prevMessages, botMessage]);
                     }
-                  ).catch((err)=>console.log(err));
-  
+                  ).catch((err) => console.log(err));
+
                   console.log("Call directly" + empId);
                 }
-                
-              }else if(content === "Enter your location")
-              {
+
+              } else if (content === "Enter your location") {
                 setMessages((prevMessages) => [...prevMessages, botMessage]);
                 //if bot recognise the prompt then it will ask for another input and to get another input 
-              //isContinue must be true
-              setIsContinued(true);
-              setLastQuestion(content);
-              return;
-              //for continuity code will continue from handleSentMessage
-              }else{
+                //isContinue must be true
+                setIsContinued(true);
+                setLastQuestion(content);
+                return;
+                //for continuity code will continue from handleSentMessage
+              } else if (content === "Enter your employee id") {
+                if (!empId) {
+                  setMessages((prevMessages) => [...prevMessages, botMessage]);
+                  //if bot recognise the prompt then it will ask for another input and to get another input 
+                  //isContinue must be true
+                  setIsContinued(true);
+                  setLastQuestion(content);
+                  return;
+                } else {
+                  axios.get(`http://localhost:8080/chatbot/questionmanager/${empId}`).then(
+                    (response) => {
+                      console.log(response.data);
+                      const { content } = response.data;
+                      // botResponse = content;
+                      const botMessage = { text: content, isBot: true };
+                      setMessages((prevMessages) => [...prevMessages, botMessage]);
+                    }
+                  ).catch((err) => console.log(err));
+                }
+              }
+              else {
                 setMessages((prevMessages) => [...prevMessages, botMessage]);
                 //if bot recognise the prompt then it will ask for another input and to get another input 
-              //isContinue must be true
-              setIsContinued(true);
-              setLastQuestion(content);
-              return;
+                //isContinue must be true
+                setIsContinued(true);
+                setLastQuestion(content);
+                return;
               }
 
-              
+
               //if bot doesn't reconise the prompt it will return null to complete the sequence
               if (content === "Sorry... not able to get your prompt") {
                 return;
               }
-              
-              
+
+
             }
           )
         }
@@ -294,55 +322,55 @@ const simulateChatbotResponse = () => {
 
   return (
     <div className='chatboxBackground'>
-    <div className="chat-box">
-      <div className="chat-messages"  ref={chatboxRef}>
-           <Instruction/>
-            {
-              messages.map((message, index) => (
-                <div
-                  key={index}
-                  className={`message ${message.isBot ? 'bot ' : 'user'}`}
-                >
-                  <p >
-                    {loading?
-                      (index === messages.length-1 && message.isBot && index >= 2)?
-                      <ThreeDots 
-                        height="30" 
-                        width="30" 
+      <div className="chat-box">
+        <div className="chat-messages" ref={chatboxRef}>
+          <Instruction />
+          {
+            messages.map((message, index) => (
+              <div
+                key={index}
+                className={`message ${message.isBot ? 'bot ' : 'user'}`}
+              >
+                <p >
+                  {loading ?
+                    (index === messages.length - 1 && message.isBot && index >= 2) ?
+                      <ThreeDots
+                        height="30"
+                        width="30"
                         radius="7"
-                        color="#4fa94d" 
+                        color="#4fa94d"
                         ariaLabel="three-dots-loading"
                         wrapperStyle={{}}
                         wrapperClassName=""
                         visible={true}
                       /> :
-                        message.text
-                      :
-                      message.text}
-                  {}
-                  </p>
-                  
-                </div>
-              ))
-        }
+                      message.text
+                    :
+                    message.text}
+                  { }
+                </p>
+
+              </div>
+            ))
+          }
 
 
+        </div>
+        <div className="input-container">
+          <input
+            type="text"
+            placeholder="Type your message..."
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyPress={handleKey}
+          />
+          <button className="mx-3" onClick={isRecording ? handleStopRecording : handleStartRecording}>
+            {isRecording ? <MicOffIcon /> : <MicIcon />}
+          </button>
+          <button onClick={handleSendMessage}>Send</button>
+          <Voice text={messages} />
+        </div>
       </div>
-      <div className="input-container">
-        <input
-          type="text"
-          placeholder="Type your message..."
-          value={newMessage}
-          onChange={(e) => setNewMessage(e.target.value)}
-          onKeyPress={handleKey}
-        />
-        <button className="mx-3" onClick={isRecording ? handleStopRecording : handleStartRecording}>
-          {isRecording ? <MicOffIcon /> : <MicIcon />}
-        </button>
-        <button onClick={handleSendMessage}>Send</button>
-        <Voice text={messages}/>
-      </div>
-    </div>
     </div>
   );
 }
