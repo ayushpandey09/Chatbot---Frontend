@@ -201,7 +201,7 @@ function ChatBox() {
             }
           )
       }
-      else if (lastQuestion === "Confirm if you want to exit") {
+      else if (lastQuestion === "Enter \"yes\" to confirm") {
         if (userMessage.text.toLowerCase().includes("yes")) {
           const email = localStorage.getItem('user_email');
           console.log("user email obtained: " + email);
@@ -292,6 +292,10 @@ function ChatBox() {
                   ).catch((err) => console.log(err));
                 }
               }
+              else if (content === "Sorry, the prompt could not be recognised") {
+                setMessages((prevMessages) => [...prevMessages, botMessage]);
+                return;
+              }
               else {
                 setMessages((prevMessages) => [...prevMessages, botMessage]);
                 //if bot recognise the prompt then it will ask for another input and to get another input 
@@ -300,14 +304,6 @@ function ChatBox() {
                 setLastQuestion(content);
                 return;
               }
-
-
-              //if bot doesn't reconise the prompt it will return null to complete the sequence
-              if (content === "Sorry... not able to get your prompt") {
-                return;
-              }
-
-
             }
           )
         }
